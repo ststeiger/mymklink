@@ -81,12 +81,41 @@ namespace mymklink
             //bool bbb = mklink.CreateSymbolicLink(@"d:\temp", @"D:\Temp2", mklink.SYMBOLIC_LINK_FLAG.File);
             // Console.WriteLine(bbb);
 
-            // Symlink-name, TargetName, AllowOverwrite
-            FS.NTFS.JunctionPoint.Create(@"d:\temp2", @"D:\Temp", false);
 
-            
+            string strSource = $@"D:\{System.Environment.UserName.ToLowerInvariant()}\Documents\Visual Studio 2019\TFS\COR-Basic\COR-Basic\Basic";
+            string strTarget = $@"D:\{System.Environment.UserName.ToLowerInvariant()}\Documents\Visual Studio 2019\Gitlab\COR-Basic\COR-Basic\Basic";
+
+
+            string[] dirs = System.IO.Directory.GetDirectories(strSource, "*.*", System.IO.SearchOption.TopDirectoryOnly);
+
+
+            foreach (string dir in dirs)
+            {
+                // string dirname = System.IO.Path.GetDirectoryName(dir);
+                string dirname = new DirectoryInfo(dir).Name;
+
+                if (".vs".Equals(dirname, StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+
+                string junctionPoint = System.IO.Path.Combine(strTarget, dirname);
+
+                System.Console.WriteLine(junctionPoint);
+                // Symlink-name, TargetName, AllowOverwrite
+                FS.NTFS.JunctionPoint.Create(junctionPoint, dir, false);
+            }
 
         } // End Sub Main
+
+
+        public static void CreateUsernameAlias()
+        {
+            string sourceDir = System.IO.Path.Combine(@"D:\", System.Environment.UserName.ToLowerInvariant());
+            string junctionPoint = System.IO.Path.Combine(@"D:\", "username");
+            // Symlink-name, TargetName, AllowOverwrite
+            FS.NTFS.JunctionPoint.Create(junctionPoint, sourceDir, false);
+        }
+
 
 
     } // End Class Program
