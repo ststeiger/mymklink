@@ -1,11 +1,6 @@
 ﻿
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
-using System.IO;
-
 // http://community.bartdesmet.net/blogs/bart/archive/2006/10/24/Windows-Vista-_2D00_-Creating-symbolic-links-with-C_2300_.aspx
+
 
 namespace mymklink
 {
@@ -18,16 +13,16 @@ namespace mymklink
         /// <summary>
         /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
-        [STAThread]
+        [System.STAThread]
         static void Main()
         {
             bool bShowWindow = false;
 
             if (bShowWindow)
             {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                System.Windows.Forms.Application.EnableVisualStyles();
+                System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
+                System.Windows.Forms.Application.Run(new Form1());
             }
 
             /*
@@ -37,20 +32,20 @@ namespace mymklink
             string symF = "bar.txt";
             string targetF = "foo.txt";
 
-            Console.WriteLine(">echo \"Hello World\" > {0}", targetF);
+            System.Console.WriteLine(">echo \"Hello World\" > {0}", targetF);
             StreamWriter sw = File.CreateText(targetF);
             sw.WriteLine("Hello World");
             sw.Close();
-            Console.WriteLine();
+            System.Console.WriteLine();
 
-            Console.WriteLine(">mklink {0} {1}", symF, targetF);
+            System.Console.WriteLine(">mklink {0} {1}", symF, targetF);
             if (mklink.CreateSymbolicLink(symF, targetF, 0))
-                Console.WriteLine("symbolic link created for {0} <<===>> {1}", symF, targetF);
-            Console.WriteLine();
+                System.Console.WriteLine("symbolic link created for {0} <<===>> {1}", symF, targetF);
+            System.Console.WriteLine();
 
-            Console.WriteLine(">type {0}", targetF);
-            Console.WriteLine(File.ReadAllText(targetF));
-            Console.WriteLine();
+            System.Console.WriteLine(">type {0}", targetF);
+            System.Console.WriteLine(File.ReadAllText(targetF));
+            System.Console.WriteLine();
 
             //
             // Symbolic directory link bar <<===>> foo
@@ -58,28 +53,28 @@ namespace mymklink
             string symD = "bar";
             string targetD = "foo";
 
-            Console.WriteLine(">mkdir {0}", targetD);
+            System.Console.WriteLine(">mkdir {0}", targetD);
             Directory.CreateDirectory(targetD);
-            Console.WriteLine();
+            System.Console.WriteLine();
 
-            Console.WriteLine(">echo \"Hello World\" > {0}\\demo.txt", targetD);
+            System.Console.WriteLine(">echo \"Hello World\" > {0}\\demo.txt", targetD);
             StreamWriter sw2 = File.CreateText(targetD + "\\demo.txt");
             sw2.WriteLine("Hello World");
             sw2.Close();
-            Console.WriteLine();
+            System.Console.WriteLine();
 
-            Console.WriteLine(">mklink /d {0} {1}", symD, targetD);
+            System.Console.WriteLine(">mklink /d {0} {1}", symD, targetD);
 
             if (mklink.CreateSymbolicLink(symD, targetD, mklink.SYMBOLIC_LINK_FLAG.Directory))
-                Console.WriteLine("symbolic link created for {0} <<===>> {1}", symD, targetD);
-            Console.WriteLine();
+                System.Console.WriteLine("symbolic link created for {0} <<===>> {1}", symD, targetD);
+            System.Console.WriteLine();
 
-            Console.WriteLine(">dir {0}", targetD);
+            System.Console.WriteLine(">dir {0}", targetD);
             foreach (string f in Directory.GetFiles(targetD))
-                Console.WriteLine(f);
+                System.Console.WriteLine(f);
             */
             //bool bbb = mklink.CreateSymbolicLink(@"d:\temp", @"D:\Temp2", mklink.SYMBOLIC_LINK_FLAG.File);
-            // Console.WriteLine(bbb);
+            // System.Console.WriteLine(bbb);
 
 
             string strSource = $@"D:\{System.Environment.UserName.ToLowerInvariant()}\Documents\Visual Studio 2019\TFS\COR-Basic\COR-Basic\Basic";
@@ -92,9 +87,9 @@ namespace mymklink
             foreach (string dir in dirs)
             {
                 // string dirname = System.IO.Path.GetDirectoryName(dir);
-                string dirname = new DirectoryInfo(dir).Name;
+                string dirname = new System.IO.DirectoryInfo(dir).Name;
 
-                if (".vs".Equals(dirname, StringComparison.OrdinalIgnoreCase))
+                if (".vs".Equals(dirname, System.StringComparison.OrdinalIgnoreCase))
                     continue;
 
 
